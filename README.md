@@ -135,6 +135,10 @@ PRs welcome. The most useful contributions right now:
 
 Threat intelligence compiled from [Aikido](https://www.aikido.dev/blog/mini-shai-hulud-is-back-tanstack-compromised), [Socket.dev](https://socket.dev/blog/tanstack-npm-packages-compromised-mini-shai-hulud-supply-chain-attack), [Wiz](https://www.wiz.io/blog/mini-shai-hulud-strikes-again-tanstack-more-npm-packages-compromised), [Unit 42](https://unit42.paloaltonetworks.com/npm-supply-chain-attack/), [Microsoft](https://www.microsoft.com/en-us/security/blog/2025/12/09/shai-hulud-2-0-guidance-for-detecting-investigating-and-defending-against-the-supply-chain-attack/), [Snyk](https://snyk.io/blog/tanstack-npm-packages-compromised/), [StepSecurity](https://www.stepsecurity.io/blog/mini-shai-hulud-is-back-a-self-spreading-supply-chain-attack-hits-the-npm-ecosystem), and [Netskope](https://www.netskope.com/blog/shai-hulud-2-0-aggressive-automated-one-of-fastest-spreading-npm-supply-chain-attacks-ever-observed).
 
+## Disclaimer
+
+This tool provides defense-in-depth against known Shai-Hulud campaign variants and IOCs. It is not a guarantee of protection. New attack vectors, unknown compromised packages, and novel supply chain techniques may not be detected. Use alongside other security practices (token rotation, 2FA, dependency auditing). The authors are not liable for any damages resulting from supply chain attacks. See [LICENSE](LICENSE).
+
 ## License
 
 [MIT](LICENSE)
