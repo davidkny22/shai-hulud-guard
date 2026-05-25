@@ -52,8 +52,14 @@ $MonitorScript = Join-Path $BinDir 'shai-hulud-monitor.ps1'
 
 Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false -ErrorAction SilentlyContinue
 
-$Action = New-ScheduledTaskAction -Execute 'powershell.exe' `
-    -Argument "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$MonitorScript`""
+$VbsWrapper = Join-Path $BinDir 'run-monitor.vbs'
+Set-Content -Path $VbsWrapper -Value @"
+Set objShell = CreateObject("WScript.Shell")
+objShell.Run "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File ""$MonitorScript""", 0, True
+"@
+
+$Action = New-ScheduledTaskAction -Execute 'wscript.exe' `
+    -Argument "`"$VbsWrapper`""
 
 $Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) `
     -RepetitionInterval (New-TimeSpan -Minutes 5)
