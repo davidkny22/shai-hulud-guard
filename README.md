@@ -94,14 +94,18 @@ The `--ignore-scripts` alias breaks this at step 3. The scanner catches it at st
 ## Manual scanning
 
 ```bash
-# macOS / Linux
+# Scan a specific project (macOS / Linux)
 shai-hulud-scan /path/to/project
+
+# Check the background monitor log
 tail -20 ~/.shai-hulud-guard/log/monitor.log
 ```
 
 ```powershell
-# Windows
+# Scan a specific project (Windows)
 shai-hulud-scan C:\path\to\project
+
+# Check the background monitor log
 Get-Content ~\.shai-hulud-guard\log\monitor.log -Tail 20
 ```
 
