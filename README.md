@@ -18,15 +18,25 @@ This tool does three things:
 
 ## Install
 
+### macOS / Linux
+
 ```bash
 git clone https://github.com/davidkny22/shai-hulud-guard
 cd shai-hulud-guard
 bash install.sh
 ```
 
+### Windows
+
+```powershell
+git clone https://github.com/davidkny22/shai-hulud-guard
+cd shai-hulud-guard
+powershell -ExecutionPolicy Bypass -File install.ps1
+```
+
 Restart your shell. That's it.
 
-The installer sets up the blocklist, scanner, background monitor (macOS LaunchAgent or Linux cron), and shell aliases. No account, no cloud, no dependencies beyond bash.
+The installer sets up the blocklist, scanner, background monitor (macOS LaunchAgent, Linux cron, or Windows Task Scheduler), and shell aliases / PowerShell profile functions. No account, no cloud, no dependencies beyond bash or PowerShell.
 
 ## What happens after install
 
@@ -84,11 +94,15 @@ The `--ignore-scripts` alias breaks this at step 3. The scanner catches it at st
 ## Manual scanning
 
 ```bash
-# Scan a specific project
+# macOS / Linux
 shai-hulud-scan /path/to/project
-
-# Check the background monitor log
 tail -20 ~/.shai-hulud-guard/log/monitor.log
+```
+
+```powershell
+# Windows
+shai-hulud-scan C:\path\to\project
+Get-Content ~\.shai-hulud-guard\log\monitor.log -Tail 20
 ```
 
 ## Updating the blocklist
@@ -104,7 +118,7 @@ cp blocklist/shai-hulud-blocked-packages.txt ~/.shai-hulud-guard/blocklist/
 - Covers **known** compromised versions. New infections require a blocklist update.
 - `--ignore-scripts` is the real protection layer. If you bypass the alias and manually execute scripts from a compromised package, the malware can still run.
 - The background monitor watches `~/Documents/GitHub`, `~/Projects`, `~/dev`, `~/code`, `~/src`, and `~/workspace`. Edit `WATCH_DIRS` in `bin/shai-hulud-monitor.sh` for your setup.
-- macOS and Linux only. Windows support welcome as a PR.
+- Windows support requires PowerShell 5.1+ and uses Task Scheduler instead of cron/LaunchAgent.
 
 ## Uninstall
 
@@ -116,9 +130,16 @@ rm ~/Library/LaunchAgents/com.shai-hulud-guard.monitor.plist
 # Linux
 crontab -l | grep -v "shai-hulud-monitor" | crontab -
 
-# All platforms
+# macOS / Linux shared
 rm -rf ~/.shai-hulud-guard
 # Remove the "Shai-Hulud Guard" block from your .zshrc or .bashrc
+```
+
+```powershell
+# Windows
+Unregister-ScheduledTask -TaskName 'ShaiHuludGuardMonitor' -Confirm:$false
+Remove-Item -Recurse -Force "$env:USERPROFILE\.shai-hulud-guard"
+# Remove the "Shai-Hulud Guard" block from your PowerShell profile
 ```
 
 ## Contributing
@@ -129,7 +150,6 @@ PRs welcome. The most useful contributions right now:
 - Additional IOC file signatures
 - Bun and Deno support
 - CI/CD integration (GitHub Actions, GitLab CI)
-- Windows support
 
 ## Sources
 
