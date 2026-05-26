@@ -134,7 +134,7 @@ function safe-yarn {
 Set-Alias -Name npm -Value safe-npm -Scope Global -Option AllScope
 Set-Alias -Name pnpm -Value safe-pnpm -Scope Global -Option AllScope
 Set-Alias -Name yarn -Value safe-yarn -Scope Global -Option AllScope
-function shai-hulud-scan { & "$env:USERPROFILE\.shai-hulud-guard\bin\shai-hulud-scan.ps1" -Path ($args[0] ?? '.') }
+function shai-hulud-scan { & "$env:USERPROFILE\.shai-hulud-guard\bin\shai-hulud-scan.ps1" -Path $(if ($args[0]) { $args[0] } else { '.' }) }
 # === End Shai-Hulud Guard ===
 '@
     Add-Content -Path $ProfilePath -Value $profileBlock
